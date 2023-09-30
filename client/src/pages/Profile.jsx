@@ -14,8 +14,12 @@ import {
     deleteUserFailure,
     deleteUserStart,
     deleteUserSuccess,
+    signOutUserStart,
+    signOutUserSuccess,
+    signOutUserFailure
 } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 
 const Profile = () => {
@@ -107,6 +111,21 @@ const Profile = () => {
         }
     }
 
+    const handleSignOut = async () => {
+        try {
+            dispatch(signOutUserStart());
+            const res = await fetch('/api/auth/signout');
+            const data = await res.json();
+            if (data.success === false) {
+                dispatch(signOutUserFailure(data.message));
+                return;
+            }
+            dispatch(signOutUserSuccess(data));
+        } catch (error) {
+            dispatch(signOutUserFailure(error.message));
+        }
+    }
+
     return (
         <div className='p-3 max-w-lg mx-auto'>
             <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -141,10 +160,11 @@ const Profile = () => {
                 <input type="email" placeholder='email' defaultValue={currentUser.email} className='border p-3 rounded-lg' id='email' onChange={handleChange} />
                 <input type="password" placeholder='password' className='border p-3 rounded-lg' id='password' onChange={handleChange} />
                 <button disabled={loading} className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Update'}</button>
+                <Link className='bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95' to="/create-listing">Create Listing</Link>
             </form>
             <div className='flex justify-between mt-5'>
                 <span className='text-red-700 cursor-pointer' onClick={handleDeleteAccount}>delete Account</span>
-                <span className='text-red-700 cursor-pointer'>sign out</span>
+                <span className='text-red-700 cursor-pointer' onClick={handleSignOut}>sign out</span>
             </div>
 
             <p className='text-red-700 mt-5'>{error ? error : ""}</p>
