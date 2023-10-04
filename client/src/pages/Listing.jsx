@@ -20,7 +20,7 @@ const Listing = () => {
     const [contact, setContact] = useState(false);
     const { currentUser } = useSelector((state) => state.user);
 
-    console.log(currentUser._id, listing?.userRef)
+
 
     const params = useParams();
 
@@ -99,7 +99,7 @@ const Listing = () => {
                             </p>
                             {
                                 listing.offer && (
-                                    <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>${+listing.regularPrice - +listing.discountPrice}</p>
+                                    <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>${+listing.regularPrice - +listing.discountPrice} OFF</p>
                                 )
                             }
                         </div>
