@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import ListingItem from '../components/ListingItem';
+import Loader from '../components/Loader';
 
 
 const Home = () => {
@@ -12,20 +13,24 @@ const Home = () => {
     const [offerListings, setOfferListings] = useState([]);
     const [saleListings, setSaleListings] = useState([]);
     const [rentListings, setRentListings] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     SwiperCore.use([Navigation]);
-
-    console.log(offerListings)
-
 
     useEffect(() => {
         const fetchOfferListings = async () => {
             try {
+                setIsLoading(true);
                 const res = await fetch(`/api/listing/get?offer=true&limit=4`);
                 const data = await res.json();
+                if (data.success === false) {
+                    setIsLoading(false);
+                    return;
+                }
                 setOfferListings(data);
+                setIsLoading(false);
                 fetchRentListings();
             } catch (error) {
-                console.log(error);
+                setIsLoading(false)
             }
         }
 
@@ -49,13 +54,15 @@ const Home = () => {
                 console.log(error);
             }
         }
-
         fetchOfferListings();
     }, []);
 
     return (
         <div>
             {/* TOP */}
+            {
+                isLoading && <Loader />
+            }
             <div className="flex flex-col gap-6 p-16 px-3 max-w-6xl mx-auto">
                 <h1 className='text-slate-700 font-bold text-3xl lg:text-6xl'>Find your next <span className='text-slate-500'>perfect</span>
                     <br />
@@ -73,11 +80,22 @@ const Home = () => {
 
             {/* SWIPER */}
 
-            <Swiper navigation>
+            <Swiper spaceBetween={30}
+                centeredSlides={true}
+                effect={'fade'}
+                autoplay={{
+                    delay: 4000,
+                    disableOnInteraction: false,
+                }}
+                pagination={{
+                    clickable: true,
+                }}
+                navigation={true}
+                modules={[EffectFade, Autoplay, Pagination, Navigation]}>
                 {
                     offerListings && offerListings.length > 0 &&
                     offerListings.map((listing) => (
-                        <SwiperSlide>
+                        <SwiperSlide key={listing._id}>
                             <div style={{ background: `url(${listing.imageUrls[0]}) center no-repeat`, backgroundSize: 'cover' }} className='h-[500px]' key={listing._id}></div>
                         </SwiperSlide>
                     ))

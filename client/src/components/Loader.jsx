@@ -1,17 +1,13 @@
-import React from 'react'
+import spinner from "../assets/spinner.svg";
 
 const Loader = () => {
     return (
 
-        <>
-            <div
-                class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-info motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                role="status">
-                <span
-                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                >Loading...</span>
+        <div className="bg-black bg-opacity-50 flex items-center justify-center fixed left-0 right-0 bottom-0 top-0 z-50">
+            <div>
+                <img src={spinner} alt="Loading..." className="h-24" />
             </div>
-        </>
+        </div>
 
 
 

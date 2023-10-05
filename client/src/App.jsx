@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Home from './pages/Home';
 import About from './pages/About';
 import Login from './pages/Login';
@@ -14,22 +16,41 @@ import Search from './pages/Search';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/sign-in" element={<Login />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/listing/:listingId" element={<Listing />} />
-        <Route element={<PrivateRoute />} >
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/create-listing" element={<CreateListing />} />
-          <Route path="/update-listing/:listingId" element={<UpdateListing />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/sign-in" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/listing/:listingId" element={<Listing />} />
+          <Route element={<PrivateRoute />} >
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/create-listing" element={<CreateListing />} />
+            <Route path="/update-listing/:listingId" element={<UpdateListing />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+
+
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+    </>
+
+
+
   )
 }
 

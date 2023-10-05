@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
+import { toast } from "react-toastify";
 import {
     getDownloadURL,
     getStorage,
@@ -85,13 +86,14 @@ const Profile = () => {
             const data = await res.json();
             if (data.success === false) {
                 dispatch(updateUserFailure(data.message));
+                toast.error('User already exists.');
                 return;
             }
-
             dispatch(updateUserSuccess(data));
-            setUpdateSuccess(true);
+            toast.success('User updated successfully');
         } catch (error) {
             dispatch(updateUserFailure(error.message));
+            toast.error(error.message);
         }
     };
 
@@ -100,7 +102,6 @@ const Profile = () => {
             dispatch(deleteUserStart());
             const res = await fetch(`/api/user/delete/${currentUser._id}`, {
                 method: 'DELETE',
-
             });
             const data = await res.json();
             if (data.success === false) {
@@ -137,6 +138,7 @@ const Profile = () => {
             const data = await res.json();
             if (data.success === false) {
                 console.log(data.message);
+                toast.error(data.message);
                 return;
             }
             setUserListings((prev) => prev.filter((listing) => listing._id !== listingId));
@@ -152,11 +154,13 @@ const Profile = () => {
             const data = await res.json();
             if (data.success === false) {
                 setShowListingError(true);
+                toast.error(data.message);
                 return;
             }
             setUserListings(data);
         } catch (error) {
             setShowListingError(true);
+            toast.error(error.message);
         }
     }
 
@@ -201,10 +205,8 @@ const Profile = () => {
                 <span className='text-red-700 cursor-pointer' onClick={handleSignOut}>sign out</span>
             </div>
 
-            <p className='text-red-700 mt-5'>{error ? error : ""}</p>
-            <p className='text-green-700 mt-5'>{updateSuccess ? 'User is updated successfully!' : ''}</p>
-
             <button onClick={handleShowListings} className='text-green-700 w-full'>Show Listings</button>
+
             <p className='text-red-700 mt-5'>{showListingError ? 'Error showing listings' : ''}</p>
 
             {userListings && userListings.length > 0 &&
