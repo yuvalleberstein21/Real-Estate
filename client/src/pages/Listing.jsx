@@ -7,6 +7,7 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css/bundle';
 import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare } from 'react-icons/fa';
 import Contact from '../components/Contact';
+import Loader from '../components/Loader';
 
 
 const Listing = () => {
@@ -50,7 +51,7 @@ const Listing = () => {
 
     return (
         <main>
-            {loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
+            {loading && <p className='text-center my-7 text-2xl'><Loader /></p>}
             {error && <p className='text-center my-7 text-2xl'>Something went wrong...</p>}
 
             {listing && !loading && !error && (
