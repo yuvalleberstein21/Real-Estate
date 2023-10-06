@@ -30,7 +30,7 @@ const Header = () => {
 
 
     return (
-        <header className='bg-slate-200 shadow-md'>
+        <header className='bg-stone-100 shadow-sm sticky top-0 z-40'>
             <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
                 <Link to="/">
                     <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
@@ -38,7 +38,7 @@ const Header = () => {
                         <span className='text-slate-700'>Estate</span>
                     </h1>
                 </Link>
-                <form onSubmit={handleSubmit} className='bg-slate-100 p-3 rounded-lg flex items-center'>
+                <form onSubmit={handleSubmit} className='bg-gray-200 p-2 rounded-lg flex items-center'>
                     <input
                         type="text"
                         placeholder='Search...'
@@ -49,7 +49,6 @@ const Header = () => {
                     <button>
                         <FaSearch className="text-slate-600" />
                     </button>
-
                 </form>
                 <ul className="flex gap-4">
                     <Link to="/">

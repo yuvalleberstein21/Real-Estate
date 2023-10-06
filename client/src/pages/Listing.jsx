@@ -83,26 +83,39 @@ const Listing = () => {
                         </p>
                     )}
                     <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
-                        <p className='text-2xl font-semibold'>
-                            {listing.name} - $
-                            {listing.offer
-                                ? listing.discountPrice.toLocaleString('en-US')
-                                : listing.regularPrice.toLocaleString('en-US')}
-                            {listing.type === 'rent' && ' / month'}
-                        </p>
+
+                        <h1 className='text-3xl font-bold text-slate-700'>{listing.name}</h1>
                         <p className='flex items-center mt-6 gap-2 text-slate-600 text-sm'>
                             <FaMapMarkerAlt className='text-green-700' />
                             {listing.address}
                         </p>
                         <div className="flex gap-4">
-                            <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
+                            <p className='bg-red-900 w-full max-w-[80px] text-white text-center p-1 rounded-md'>
                                 {listing.type === 'rent' ? 'For Rent' : "For Sale"}
                             </p>
-                            {
-                                listing.offer && (
-                                    <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>${+listing.regularPrice - +listing.discountPrice} OFF</p>
-                                )
-                            }
+                            <p className='text-2xl font-semibold'>
+
+                                {listing.offer ? (
+                                    <>
+                                        <span className='text-lg bg-green-900 w-full max-w-[200px] p-1 text-white text-center rounded-md'>
+                                            ${listing.discountPrice.toLocaleString('en-US')}
+                                            {' '}
+                                        </span>
+
+                                        <span className='line-through text-red-700 text-lg ml-2'>
+                                            ${listing.regularPrice.toLocaleString('en-US')}
+                                        </span>
+
+                                    </>
+                                ) : (
+                                    <span className='text-lg bg-green-900 w-full max-w-[200px] p-1 text-white text-center rounded-md'>
+                                        {' '} ${listing.regularPrice.toLocaleString('en-US')}
+                                    </span>
+                                )}
+                                <span className='text-xl'>
+                                    {listing.type === 'rent' ? ' / month' : ''}
+                                </span>
+                            </p>
                         </div>
                         <p className='text-slate-800'>
                             <span className='font-semibold text-black'> description - </span>
